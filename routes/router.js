@@ -4,14 +4,25 @@ const Schemas = require('../models/schemas.js')
 
 router.get('/parties/', async (req, res) => {
     const parties = Schemas.Parties
-
     const partyData = await parties.find().exec()
     if (partyData) {
         res.send(JSON.stringify(partyData))
     }
 })
 
-router.get('/parties/:id', async (req, res, next) => {
+router.get('/party_exists/:id', async (req, res) => {
+    const parties = Schemas.Parties
+    const id = req.params.id
+    try {
+        const result = await parties.findOne({_id: id}).exec()
+        if (!result) res.send(false).status(404)
+        else res.send(true).status(200)
+    } catch (e) {
+        res.send(false).status(404)
+    }
+})
+
+router.get('/party/id/:id', async (req, res, next) => {
     const parties = Schemas.Parties
     const id = req.params.id
     const partyData = await parties.findOne({_id: id}).exec()
@@ -22,7 +33,7 @@ router.get('/parties/:id', async (req, res, next) => {
     }
 })
 
-router.put('/parties/:id', async (req, res) => {
+router.put('/party/id/:id', async (req, res) => {
     const id = req.params.id
     const parties = Schemas.Parties
     const newResponse = new Schemas.Parties({
@@ -40,7 +51,7 @@ router.put('/parties/:id', async (req, res) => {
     }
 })
 
-router.get('/party/:email', async (req, res, next) => {
+router.get('/party/email/:email', async (req, res, next) => {
     const parties = Schemas.Parties
     const email = req.params.email
     const partyData = await parties.findOne({emails: email}).exec()
