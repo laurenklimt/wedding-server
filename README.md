@@ -1,2 +1,2 @@
 # wedding-server
-Backend server for wedding RSVP website written in Node.JS
+Backend server for wedding RSVP website written in Express JS that connects to MongoDB
