@@ -1,2 +1,2 @@
 # wedding-server
-backend for wedding website
+Backend server for wedding RSVP website written in Node.JS
